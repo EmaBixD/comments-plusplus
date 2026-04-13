@@ -1,8 +1,8 @@
 /**
  * Binary Search Tree (BST) Implementation
  * 
- * NOTE: This is a playground file to showcase Comments++ features.
- * Hover over the image paths to see the tooltips! [media/logo.png]
+ * NOTE: This is a playground file to showcase Comments++ features. [media/logo.png]
+ * Hover over the image paths to see the tooltips!
  */
 public class BinarySearchTree {
 
@@ -29,7 +29,7 @@ public class BinarySearchTree {
         root = insertRec(root, key);
     }
 
-    // HACK: Recursive insertion is bypassing the depth limit check. [@emabixd]
+    // HACK: [low] Recursive insertion is bypassing the depth limit check. [@emabixd]
     Node insertRec(Node root, int key) {
         if (root == null) {
             root = new Node(key);
@@ -45,7 +45,7 @@ public class BinarySearchTree {
         return root;
     }
 
-    // TODO: Add the delete() method. [MEDIUM] [@sarah] [2026-05-10]
+    // todo: Add the delete() method. [MEDIUM] [@sarah] [2026-05-10]
     // Currently, elements cannot be deleted without breaking the tree structure.
     
     public static void main(String[] args) {
