@@ -1,23 +1,23 @@
 /**
- * Questo è un file di test per l'estensione Comments++
- * Sentiti libero di spostarti su questi commenti per vedere l'estensione in azione.
+ * This is a playground file for the Comments++ extension.
+ * Feel free to navigate through these comments to see the extension in action.
  */
 
-// TODO: Implementare il sistema di login [CRITICAL] [@emabixd] [2026-04-15]
+// TODO: Implement the login system [CRITICAL] [@emabixd] [2026-04-15]
 function login() {
-  // FIXME: Controllare la memoria, c'è un leak qui! [HIGH] [@mario] [2026-04-20]
+  // FIXME: Check memory usage, there is a memory leak here! [HIGH] [@mario] [2026-04-20]
   console.log("Login...");
 }
 
-// HACK: Workaround temporaneo per il bug #123.
-// Da rimuovere quando il team di backend aggiornerà le API. [@sara]
+// HACK: Temporary workaround for bug #123.
+// Remove this when the backend team updates the API. [@sara]
 const tempFix = true;
 
-// NOTE: L'interfaccia dovrebbe seguire il design di Figma.
-// Ecco uno screenshot della UI attesa: [media/logo.png]
+// NOTE: The interface should follow the Figma design.
+// Here is a screenshot of the expected UI: [media/logo.png]
 function renderUI() {
-  // DEPRECATED: Questa funzione non è più sicura. Usare renderUI_v2() invece.
+  // DEPRECATED: This function is no longer safe. Use renderUI_v2() instead.
 }
 
-// TODO: Aggiungere il supporto per il database [LOW] [@john] [@sarah] [media/icon.svg] [media/logo.png]
-// Abbiamo bisogno di configurare i modelli.
+// TODO: Add database support [LOW] [@john] [@sarah] [media/icon.svg] [media/logo.png]
+// We need to configure the models.
