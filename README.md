@@ -3,10 +3,19 @@
   <p><b>Supercharge your code comments. Track technical debt, assign tasks, set deadlines, and preview images directly in your editor.</b></p>
 </div>
 
+![Hero Screenshot](media/screenshot-hero.png) <!-- PLACEHOLDER: Metti qui lo screenshot principale dell'editor coi vari colori -->
+
 ---
 
 **Comments++** turns static code comments into an interactive task management and documentation system.
 Track `TODO`s and `FIXME`s with a dedicated sidebar, advanced filtering, image hover tooltips, and rich metadata parsing.
+
+## 📸 Screenshots
+
+<!-- PLACEHOLDER: Aggiungi qui gli screenshot dell'estensione in azione -->
+| Action Sidebar | Image Previews on Hover |
+| :---: | :---: |
+| ![Sidebar](media/screenshot-sidebar.png) | ![Tooltips](media/screenshot-hover.png) |
 
 ## Key Features & Full Support
 
