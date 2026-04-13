@@ -1,0 +1,239 @@
+{
+  "name": "comments-plusplus",
+  "displayName": "Comments++",
+  "description": "Advanced comment highlighting with sidebar tree view, priorities, and filters",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "comments-plusplus",
+          "title": "Comments++",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "comments-plusplus": [
+        {
+          "id": "commentsPlusPlusTree",
+          "name": "Comments++"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "commentsPlusPlus.goToComment",
+        "title": "Comments++: Go to Comment"
+      },
+      {
+        "command": "commentsPlusPlus.filterByType",
+        "title": "Comments++: Filter by Type",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "commentsPlusPlus.filterByFile",
+        "title": "Comments++: Filter by File",
+        "icon": "$(file)"
+      },
+      {
+        "command": "commentsPlusPlus.filterByAuthor",
+        "title": "Comments++: Filter by Author",
+        "icon": "$(person)"
+      },
+      {
+        "command": "commentsPlusPlus.filterByDateRange",
+        "title": "Comments++: Filter by Date Range",
+        "icon": "$(calendar)"
+      },
+      {
+        "command": "commentsPlusPlus.filterByImage",
+        "title": "Comments++: Filter by Images",
+        "icon": "$(device-camera)"
+      },
+      {
+        "command": "commentsPlusPlus.clearFilters",
+        "title": "Comments++: Clear Filters",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "commentsPlusPlus.exportMarkdown",
+        "title": "Comments++: Export as Markdown"
+      },
+      {
+        "command": "commentsPlusPlus.exportJson",
+        "title": "Comments++: Export as JSON"
+      },
+      {
+        "command": "commentsPlusPlus.filterBy",
+        "title": "Comments++: Filter",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "commentsPlusPlus.sortBy",
+        "title": "Comments++: Sort By",
+        "icon": "$(list-ordered)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "commentsPlusPlus.filterBy",
+          "when": "view == commentsPlusPlusTree",
+          "group": "navigation",
+          "icon": "$(filter)"
+        },
+        {
+          "command": "commentsPlusPlus.sortBy",
+          "when": "view == commentsPlusPlusTree",
+          "group": "navigation",
+          "icon": "$(list-ordered)"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "commentsPlusPlus.goToComment",
+          "when": "false"
+        },
+        {
+          "command": "commentsPlusPlus.filterByType",
+          "when": "false"
+        },
+        {
+          "command": "commentsPlusPlus.filterByAuthor",
+          "when": "false"
+        },
+        {
+          "command": "commentsPlusPlus.filterByFile",
+          "when": "false"
+        },
+        {
+          "command": "commentsPlusPlus.filterByDateRange",
+          "when": "false"
+        },
+        {
+          "command": "commentsPlusPlus.filterByImage",
+          "when": "false"
+        },
+        {
+          "command": "commentsPlusPlus.clearFilters",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Comments++",
+      "properties": {
+        "commentsPlusPlus.tags": {
+          "type": "array",
+          "description": "Custom comment tags",
+          "default": [
+            {
+              "tag": "TODO",
+              "color": "#FF8C00",
+              "backgroundColor": "#FF8C0022",
+              "icon": "⚠️",
+              "priority": 4
+            },
+            {
+              "tag": "FIXME",
+              "color": "#FF2D2D",
+              "backgroundColor": "#FF2D2D22",
+              "icon": "🔴",
+              "priority": 5,
+              "bold": true
+            },
+            {
+              "tag": "HACK",
+              "color": "#FF6B35",
+              "backgroundColor": "#FF6B3522",
+              "icon": "🔧",
+              "priority": 3
+            },
+            {
+              "tag": "NOTE",
+              "color": "#F39C12",
+              "backgroundColor": "#F39C1222",
+              "icon": "📝",
+              "priority": 1,
+              "italic": true
+            },
+            {
+              "tag": "DEPRECATED",
+              "color": "#9B59B6",
+              "backgroundColor": "#9B59B622",
+              "icon": "⛔",
+              "priority": 2,
+              "strikethrough": true
+            }
+          ]
+        },
+        "commentsPlusPlus.showInlineIcons": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show icons inline next to comments"
+        },
+        "commentsPlusPlus.showBackground": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show background color on comment lines"
+        },
+        "commentsPlusPlus.highlightScope": {
+          "type": "string",
+          "enum": ["comment", "line"],
+          "default": "comment",
+          "description": "Highlight scope: 'comment' (only the comment text) or 'line' (entire line)"
+        },
+        "commentsPlusPlus.showImageHovers": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable displaying images in a popup when hovering over comments with an image path."
+        },
+        "commentsPlusPlus.imageScale": {
+          "type": "number",
+          "default": 1,
+          "description": "Scaling factor for image previews in the hover tooltip. E.g., 0.5 for half size, 2 for double size."
+        },
+        "commentsPlusPlus.sidebar.defaultFilter": {
+          "type": "string",
+          "enum": [
+            "entireWorkspace",
+            "openFiles",
+            "currentFile"
+          ],
+          "default": "entireWorkspace",
+          "description": "Default file filter for the sidebar"
+        },
+        "commentsPlusPlus.searchIncludes": {
+          "type": "string",
+          "default": "**/*.{ts,js,tsx,jsx,py,java,cpp,c,cs,rb,go,swift,php,html,css,scss,json,yaml,yml,md,sh}",
+          "description": "Glob pattern for files to include when building the full workspace tree"
+        },
+        "commentsPlusPlus.searchExcludes": {
+          "type": "string",
+          "default": "**/{node_modules,.git,dist,out,build,coverage}/**",
+          "description": "Glob pattern for folders/files to exclude when building the full workspace tree"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.39",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0"
+  }
+}
