@@ -6,8 +6,8 @@
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
+    "lib": ["ES2020"],
     "types": ["node", "vscode"]
   },
-  "include": ["src/**/*"],
   "exclude": ["node_modules", ".vscode-test"]
 }
