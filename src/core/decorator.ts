@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { TagConfig, ParsedComment } from './types';
+import { TagConfig, ParsedComment } from '../models/types';
 import { getTagConfigs, parseDocument } from './parser';
 
 type DecorationMap = Map<string, vscode.TextEditorDecorationType>;

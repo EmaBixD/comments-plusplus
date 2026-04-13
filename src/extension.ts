@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import { applyDecorations, applyDecorationsToAllEditors, resetDecorations } from './decorator';
-import { CommentTreeProvider } from './treeProvider';
-import { runExport } from './exporter';
-import { getTagConfigs } from './parser';
-import { ParsedComment, FileFilter, SortOrder } from './types';
+import { applyDecorations, applyDecorationsToAllEditors, resetDecorations } from './core/decorator';
+import { CommentTreeProvider } from './providers/treeProvider';
+import { runExport } from './commands/exporter';
+import { getTagConfigs } from './core/parser';
+import { ParsedComment, FileFilter, SortOrder } from './models/types';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Comments++ is active');

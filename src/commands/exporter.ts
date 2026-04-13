@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { ParsedComment } from './types';
-import { getTagConfigs, parseAllOpenDocuments, formatDisplayDate } from './parser';
+import { ParsedComment } from '../models/types';
+import { getTagConfigs, parseAllOpenDocuments, formatDisplayDate } from '../core/parser';
 
 function priorityLabel(p: number): string {
   return { 4: 'CRITICAL', 3: 'HIGH', 2: 'MEDIUM', 1: 'LOW', 0: 'NONE' }[p] ?? 'NONE';

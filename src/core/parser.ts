@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { TagConfig, ParsedComment } from './types';
+import { TagConfig, ParsedComment } from '../models/types';
 
 export function getTagConfigs(): TagConfig[] {
   const config = vscode.workspace.getConfiguration('commentsPlusPlus');

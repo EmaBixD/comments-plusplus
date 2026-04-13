@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { ParsedComment, FileFilter, SortOrder } from './types';
-import { getTagConfigs, parseDocument, parseAllOpenDocuments, parseAllWorkspaceFiles, formatDisplayDate } from './parser';
+import { ParsedComment, FileFilter, SortOrder } from '../models/types';
+import { getTagConfigs, parseDocument, parseAllOpenDocuments, parseAllWorkspaceFiles, formatDisplayDate } from '../core/parser';
 
 // ─── Tree Items ───────────────────────────────────────────────────────────────
 
