@@ -9,11 +9,15 @@
     "type": "git",
     "url": "https://github.com/emabixd/comments-plusplus.git"
   },
+  "homepage": "https://github.com/emabixd/comments-plusplus#readme",
+  "bugs": {
+    "url": "https://github.com/emabixd/comments-plusplus/issues"
+  },
   "engines": {
     "vscode": "^1.80.0"
   },
   "categories": [
-    "Other"
+    "Formatters"
   ],
   "activationEvents": [
     "onStartupFinished"
