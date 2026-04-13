@@ -200,7 +200,10 @@
         },
         "commentsPlusPlus.highlightScope": {
           "type": "string",
-          "enum": ["comment", "line"],
+          "enum": [
+            "comment",
+            "line"
+          ],
           "default": "comment",
           "description": "Highlight scope: 'comment' (only the comment text) or 'line' (entire line)"
         },
@@ -243,7 +246,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.39",
-    "@types/vscode": "^1.80.0",
-    "typescript": "^5.0.0"
+    "@types/vscode": "^1.115.0",
+    "typescript": "^6.0.2"
   }
 }
