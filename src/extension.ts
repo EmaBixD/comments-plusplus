@@ -39,6 +39,23 @@ export function activate(context: vscode.ExtensionContext) {
           const match = p[0];
           match.lineNumber = lineNum; // Correct the line number since we only parsed 1 line
 
+          const iconConfig = vscode.workspace.getConfiguration('commentsPlusPlus');
+          const showIcons = iconConfig.get<boolean>('showInlineIcons', true);
+          const highlightScope = iconConfig.get<'comment' | 'line'>('highlightScope', 'comment');
+          
+          const hasIcon = showIcons && match.config && match.config.icon;
+          
+          // Identify where the icon decoration is placed on the line
+          const iconPosition = highlightScope === 'line' ? 0 : match.commentStartIndex;
+          
+          // Only trigger if an icon is present AND the click cursor landed exactly where the icon is rendered.
+          // VS Code natively places the cursor exactly at the decoration's root character when clicked.
+          const clickedChar = e.selections[0].active.character;
+          
+          if (!hasIcon || Math.abs(clickedChar - iconPosition) > 1) {
+            return; // Exit if the user just clicked inside the regular text
+          }
+
           // Open Sidebar
           await vscode.commands.executeCommand('commentsPlusPlusTree.focus');
           
