@@ -26,6 +26,9 @@ Track `TODO`s and `FIXME`s with a dedicated sidebar, advanced filtering, image h
 *   **Image Previews on Hover:** Link local image paths or external URLs directly inside a comment. Hover over the comment to see the image instantly!
 *   **Advanced Filtering:** Filter workspace comments by Tags, Author, Date Range, Image presence, or search text.
 *   **Export to Markdown/JSON:** Generate reports of your filtered task lists to share with your team.
+*   **Fully Web Compatible:** Engineered to run flawlessly on `vscode.dev` and GitHub Codespaces as a pure Universal Web Extension, without relying on Node.js.
+*   **Zero False Positives:** Built with an advanced Regex engine that understands the context of 80+ programming languages, completely ignoring strings, operators, and HTML attributes that merely "look" like comments.
+*   **Interactive Click-to-Reveal:** Click directly on a comment's inline icon to instantly highlight the line and synchronize your view in the Sidebar.
 *   **Extremely Fast:** Optimized filesystem reading parses your entire workspace without slowing down your editor.
 
 ---

@@ -2,7 +2,7 @@
   "name": "comments-plusplus",
   "displayName": "Comments++",
   "description": "Advanced comment highlighting with sidebar tree view, priorities, and filters",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "emabixd",
   "icon": "media/logo.png",
   "repository": {
