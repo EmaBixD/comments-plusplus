@@ -13,13 +13,13 @@ export function formatDisplayDate(internalDueDate: string | undefined): string {
 
 /**
  * Build a regex that matches any configured tag inside a comment.
- * Supports: //, #, /*, *, --, ;, <!--, %, !, ', {#
+ * Supports: //, #, /*, *, --, ;, <!--, %, !, ', {#, {-, REM, """, ''', >
  */
 function buildTagRegex(tags: TagConfig[]): RegExp {
   const escaped = tags.map(t => t.tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const tagAlts = escaped.join('|');
   return new RegExp(
-    `(?:^|\\s)(?://|#|\\*|/\\*|--|;+|<!--|%|!|'|\\{#)\\s*(${tagAlts})(?![A-Za-z0-9_])(.*)`,
+    `(?:^|\\s)(?://|#|\\*|/\\*|--|;+|<!--|%|!|'|\\{#|\\{-|REM|"""|'''|>)\\s*(${tagAlts})(?![A-Za-z0-9_])(.*)`,
     'i'
   );
 }
@@ -122,6 +122,9 @@ export function parseRawText(text: string, filePath: string, tags: TagConfig[]):
 
       // Cleanup spaces that might have been left over by removed brackets
       textContent = textContent.replace(/\s+/g, ' ').replace(/^[:\s]+/, '').trim();
+      
+      // Clean trailing block comment closers (like */, -->, """, etc.) that might end up captured
+      textContent = textContent.replace(/(?:\*\/|-->|"""|'''|\-\}|#\}|\]\])$/, '').trim();
 
       results.push({
         tag: tagRaw.toUpperCase(),
