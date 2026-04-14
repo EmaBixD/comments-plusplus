@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Comments++</h1>
+  <h1><a href="https://marketplace.visualstudio.com/items?itemName=EmaBixD.comments-plusplus">Comments++</a></h1>
   <p><b>Supercharge your code comments. Track technical debt, assign tasks, set deadlines, and preview images directly in your editor.</b></p>
 </div>
 
