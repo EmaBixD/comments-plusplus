@@ -11,6 +11,7 @@ export class FileItem extends vscode.TreeItem {
     public readonly comments: ParsedComment[]
   ) {
     super(path.basename(filePath), vscode.TreeItemCollapsibleState.Expanded);
+    this.id = filePath;
     this.description = `${comments.length} comment${comments.length !== 1 ? 's' : ''}`;
     this.iconPath = new vscode.ThemeIcon('file-code');
     this.tooltip = filePath;
@@ -19,10 +20,11 @@ export class FileItem extends vscode.TreeItem {
 }
 
 export class CommentItem extends vscode.TreeItem {
-  constructor(public readonly comment: ParsedComment) {
+  constructor(public readonly comment: ParsedComment, public readonly parentItem?: FileItem) {
     const label = `${comment.config.icon ?? ''} ${comment.tag}: ${comment.text}`.trim();
     super(label, vscode.TreeItemCollapsibleState.None);
 
+    this.id = `${comment.filePath}:${comment.lineNumber}:${comment.tag}`;
     const displayDate = comment.dueDates ? comment.dueDates.join(', ') : '';
     this.description = `Line ${comment.lineNumber + 1}${comment.authors && comment.authors.length ? ` @${comment.authors.join(' @')}` : ''}${displayDate ? ` 📅${displayDate}` : ''}`;
     this.tooltip = comment.fullLine;
@@ -153,11 +155,24 @@ export class CommentTreeProvider implements vscode.TreeDataProvider<vscode.TreeI
     return element;
   }
 
+  getParent(element: vscode.TreeItem): vscode.ProviderResult<vscode.TreeItem> {
+    if (element instanceof CommentItem) {
+      return element.parentItem;
+    }
+    return null;
+  }
+
   getChildren(element?: vscode.TreeItem): vscode.TreeItem[] {
     if (element instanceof FileItem) {
-      return element.comments.map(c => new CommentItem(c));
+      return element.comments.map(c => new CommentItem(c, element));
     }
     return this.buildRootItems();
+  }
+
+  async revealComment(comment: ParsedComment, treeView: vscode.TreeView<vscode.TreeItem>) {
+    const dummyFile = new FileItem(comment.filePath, []);
+    const dummyComment = new CommentItem(comment, dummyFile);
+    await treeView.reveal(dummyComment, { select: true, focus: true, expand: true });
   }
 
   getFilteredComments(): ParsedComment[] {

@@ -229,7 +229,7 @@
         },
         "commentsPlusPlus.searchIncludes": {
           "type": "string",
-          "default": "**/*.{ts,js,tsx,jsx,py,java,cpp,c,cs,rb,go,swift,php,html,css,scss,json,yaml,yml,md,sh}",
+          "default": "**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,py,pyw,pyx,java,cpp,hpp,cc,hh,cxx,hxx,c,h,cs,rb,erb,go,swift,php,phtml,html,htm,css,scss,sass,less,styl,json,jsonc,yaml,yml,md,markdown,sh,bash,zsh,command,adb,ads,al,cls,trigger,adoc,asciidoc,brs,cfm,cfc,clj,cljs,cljc,edn,cob,cbl,coffee,dart,dockerfile,ex,exs,elm,erl,hrl,fs,fsi,fsx,f,for,f90,f95,f03,gd,gen,graphql,gql,groovy,gvy,gy,gsh,hs,lhs,hx,hql,q,jl,kt,kts,tex,bib,lisp,lsp,cl,el,scm,lua,mk,mak,nim,m,mm,pas,pp,inc,pl,pm,p6,pl6,pm6,pig,puml,iuml,wsd,pls,sql,ps1,psm1,psd1,r,rkt,rs,sas,scala,sc,shader,do,ado,svelte,tcl,tf,tfvars,twig,v,vh,sv,svh,vb,bas,frm,vue,xml}",
           "description": "Glob pattern for files to include when building the full workspace tree"
         },
         "commentsPlusPlus.searchExcludes": {

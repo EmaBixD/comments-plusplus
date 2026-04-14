@@ -13,16 +13,13 @@ export function formatDisplayDate(internalDueDate: string | undefined): string {
 
 /**
  * Build a regex that matches any configured tag inside a comment.
- * Supports: // TAG, # TAG, /* TAG, * TAG (inside block comments)
+ * Supports: //, #, /*, *, --, ;, <!--, %, !, ', {#
  */
 function buildTagRegex(tags: TagConfig[]): RegExp {
   const escaped = tags.map(t => t.tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  // Match single-line comment starters + optional whitespace + tag
   const tagAlts = escaped.join('|');
-  // Capture tag (group 1) and the rest of the line (group 2)
-  // Negative lookahead ensures we don't partially match words like "TODOS"
   return new RegExp(
-    `(?://|#|\\*|/\\*)\\s*(${tagAlts})(?![A-Za-z0-9_])(.*)`,
+    `(?:^|\\s)(?://|#|\\*|/\\*|--|;+|<!--|%|!|'|\\{#)\\s*(${tagAlts})(?![A-Za-z0-9_])(.*)`,
     'i'
   );
 }
@@ -171,7 +168,7 @@ export async function parseAllWorkspaceFiles(tags: TagConfig[]): Promise<ParsedC
   if (!workspaceFolders) return all;
   
   const config = vscode.workspace.getConfiguration('commentsPlusPlus');
-  const searchIncludes = config.get<string>('searchIncludes') || '**/*.{ts,js,tsx,jsx,py,java,cpp,c,cs,rb,go,swift,php,html,css,scss,json,yaml,yml,md,sh}';
+  const searchIncludes = config.get<string>('searchIncludes') || '**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs,py,pyw,pyx,java,cpp,hpp,cc,hh,cxx,hxx,c,h,cs,rb,erb,go,swift,php,phtml,html,htm,css,scss,sass,less,styl,json,jsonc,yaml,yml,md,markdown,sh,bash,zsh,command,adb,ads,al,cls,trigger,adoc,asciidoc,brs,cfm,cfc,clj,cljs,cljc,edn,cob,cbl,coffee,dart,dockerfile,ex,exs,elm,erl,hrl,fs,fsi,fsx,f,for,f90,f95,f03,gd,gen,graphql,gql,groovy,gvy,gy,gsh,hs,lhs,hx,hql,q,jl,kt,kts,tex,bib,lisp,lsp,cl,el,scm,lua,mk,mak,nim,m,mm,pas,pp,inc,pl,pm,p6,pl6,pm6,pig,puml,iuml,wsd,pls,sql,ps1,psm1,psd1,r,rkt,rs,sas,scala,sc,shader,do,ado,svelte,tcl,tf,tfvars,twig,v,vh,sv,svh,vb,bas,frm,vue,xml}';
   const searchExcludes = config.get<string>('searchExcludes') || '**/{node_modules,.git,dist,out,build,coverage}/**';
   
   for (const folder of workspaceFolders) {

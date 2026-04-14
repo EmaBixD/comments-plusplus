@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { applyDecorations, applyDecorationsToAllEditors, resetDecorations } from './core/decorator';
 import { CommentTreeProvider } from './providers/treeProvider';
 import { runExport } from './commands/exporter';
-import { getTagConfigs } from './core/parser';
+import { getTagConfigs, parseDocument } from './core/parser';
 import { ParsedComment, FileFilter, SortOrder } from './models/types';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -24,6 +24,42 @@ export function activate(context: vscode.ExtensionContext) {
   applyDecorationsToAllEditors();
 
   // ─── Event listeners ───────────────────────────────────────────────────────
+
+  // Click on a "++ comment" -> open sidebar + highlight line
+  context.subscriptions.push(
+    vscode.window.onDidChangeTextEditorSelection(async e => {
+      // Trigger only on actual user mouse clicks
+      if (e.kind === vscode.TextEditorSelectionChangeKind.Mouse && e.selections.length === 1 && e.selections[0].isEmpty) {
+        const lineNum = e.selections[0].active.line;
+        const lineText = e.textEditor.document.lineAt(lineNum).text;
+        const tags = getTagConfigs();
+        const p = require('./core/parser').parseRawText(lineText, e.textEditor.document.uri.fsPath, tags) as ParsedComment[];
+        
+        if (p.length > 0) {
+          const match = p[0];
+          match.lineNumber = lineNum; // Correct the line number since we only parsed 1 line
+
+          // Open Sidebar
+          await vscode.commands.executeCommand('commentsPlusPlusTree.focus');
+          
+          // Flash highlight the line in the editor visually
+          const decorationType = vscode.window.createTextEditorDecorationType({
+            backgroundColor: 'rgba(128, 128, 128, 0.4)',
+            isWholeLine: true
+          });
+          e.textEditor.setDecorations(decorationType, [new vscode.Range(lineNum, 0, lineNum, 0)]);
+          setTimeout(() => decorationType.dispose(), 700);
+
+          // Find the exact item traversing the provider and reveal it in Sidebar
+          try {
+            await treeProvider.revealComment(match, treeView);
+          } catch (err) {
+            console.error('Could not reveal item in tree:', err);
+          }
+        }
+      }
+    })
+  );
 
   // Re-decorate when switching editors
   context.subscriptions.push(
@@ -161,7 +197,7 @@ export function activate(context: vscode.ExtensionContext) {
       const allComments = vscode.workspace.textDocuments
         .filter(doc => doc.uri.scheme === 'file')
         .flatMap(doc => {
-          const { parseDocument } = require('./parser');
+          const { parseDocument } = require('./core/parser');
           return parseDocument(doc, tags);
         });
       
@@ -352,7 +388,7 @@ function parseDateInput(input: string): Date | null {
           return null;
         }
 
-        const { parseDocument } = require('./parser');
+        const { parseDocument } = require('./core/parser');
         const tags = getTagConfigs();
         const comments = parseDocument(document, tags);
         
