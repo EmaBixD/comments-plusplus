@@ -12,14 +12,14 @@ export function formatDisplayDate(internalDueDate: string | undefined): string {
 }
 
 /**
- * Build a regex that matches any configured tag inside a comment.
- * Supports: //, #, /*, *, --, ;, <!--, %, !, ', {#, {-, REM, """, ''', >
+ * Build a tag regex
+ * Supports basically every language
  */
 function buildTagRegex(tags: TagConfig[]): RegExp {
   const escaped = tags.map(t => t.tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const tagAlts = escaped.join('|');
   return new RegExp(
-    `(?:^|\\s)(?://|#|\\*|/\\*|--|;+|<!--|%|!|'|\\{#|\\{-|REM|"""|'''|>)\\s*(${tagAlts})(?![A-Za-z0-9_])(.*)`,
+    `(?:^|\\s|[\\{\\[\\(])(?://|#|\\*|/\\*|--|;+|<!--|%|!|'|\\{#|\\{-|REM|"""|'''|>)\\s*(${tagAlts})(?![A-Za-z0-9_])(.*)`,
     'i'
   );
 }
