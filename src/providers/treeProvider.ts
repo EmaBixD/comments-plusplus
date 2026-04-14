@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { ParsedComment, FileFilter, SortOrder } from '../models/types';
 import { getTagConfigs, parseDocument, parseAllOpenDocuments, parseAllWorkspaceFiles, formatDisplayDate } from '../core/parser';
 
@@ -10,7 +9,7 @@ export class FileItem extends vscode.TreeItem {
     public readonly filePath: string,
     public readonly comments: ParsedComment[]
   ) {
-    super(path.basename(filePath), vscode.TreeItemCollapsibleState.Expanded);
+    super(filePath.split(/[\\/]/).pop() || filePath, vscode.TreeItemCollapsibleState.Expanded);
     this.id = filePath;
     this.description = `${comments.length} comment${comments.length !== 1 ? 's' : ''}`;
     this.iconPath = new vscode.ThemeIcon('file-code');

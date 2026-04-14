@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { applyDecorations, applyDecorationsToAllEditors, resetDecorations } from './core/decorator';
 import { CommentTreeProvider } from './providers/treeProvider';
 import { runExport } from './commands/exporter';
-import { getTagConfigs, parseDocument } from './core/parser';
+import { getTagConfigs, parseDocument, parseRawText } from './core/parser';
 import { ParsedComment, FileFilter, SortOrder } from './models/types';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
         const lineNum = e.selections[0].active.line;
         const lineText = e.textEditor.document.lineAt(lineNum).text;
         const tags = getTagConfigs();
-        const p = require('./core/parser').parseRawText(lineText, e.textEditor.document.uri.fsPath, tags) as ParsedComment[];
+        const p = parseRawText(lineText, e.textEditor.document.uri.fsPath, tags) as ParsedComment[];
         
         if (p.length > 0) {
           const match = p[0];
@@ -197,7 +197,6 @@ export function activate(context: vscode.ExtensionContext) {
       const allComments = vscode.workspace.textDocuments
         .filter(doc => doc.uri.scheme === 'file')
         .flatMap(doc => {
-          const { parseDocument } = require('./core/parser');
           return parseDocument(doc, tags);
         });
       
@@ -388,7 +387,6 @@ function parseDateInput(input: string): Date | null {
           return null;
         }
 
-        const { parseDocument } = require('./core/parser');
         const tags = getTagConfigs();
         const comments = parseDocument(document, tags);
         

@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { ParsedComment } from '../models/types';
 import { getTagConfigs, parseAllOpenDocuments, formatDisplayDate } from '../core/parser';
 
@@ -17,7 +16,7 @@ export function exportMarkdown(comments: ParsedComment[]): string {
 
   let md = `# Comments++ Export\n\n_Generated: ${new Date().toLocaleString()}_\n\n`;
   byFile.forEach((cs, fp) => {
-    md += `## 📄 ${path.basename(fp)}\n\n`;
+    md += `## 📄 ${fp.split(/[\\/]/).pop() || fp}\n\n`;
     for (const c of cs) {
       const icon = c.config.icon ?? '';
       const priority = priorityLabel(c.imminence);
@@ -58,11 +57,11 @@ export async function runExport(format: 'markdown' | 'json', comments: ParsedCom
 
   const uri = await vscode.window.showSaveDialog({
     filters: { [format === 'markdown' ? 'Markdown' : 'JSON']: [ext] },
-    defaultUri: vscode.Uri.file(`comments-export.${ext}`),
+    defaultUri: vscode.Uri.file(`comments-export.${ext}`)
   });
 
   if (!uri) return;
 
-  await vscode.workspace.fs.writeFile(uri, Buffer.from(content, 'utf-8'));
-  vscode.window.showInformationMessage(`Comments++ exported to ${path.basename(uri.fsPath)}`);
+  await vscode.workspace.fs.writeFile(uri, new TextEncoder().encode(content));
+  vscode.window.showInformationMessage(`Comments++ exported to ${uri.path.split(/[\\/]/).pop() || uri.path}`);
 }
